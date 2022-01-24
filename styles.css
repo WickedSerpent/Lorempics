@@ -1,0 +1,179 @@
+
+body {
+    background-image: url(filer/); /*ferdig navigert til /filer/, men demonstrerer bakgrunnsfarge nedenfor så.. */
+    background-color:skyblue;
+    /*background-repeat: no-repeat;
+    background-position: right top;
+    background-attachment: scroll;
+    background-size: cover;*/
+    margin: 0;
+    margin-bottom: 0rem;
+    
+} 
+//
+#stil{ 
+    background-color: blanchedalmond;
+    border-color: cadetblue;
+    height: 200px;
+    width: 200px;
+    color:rgba(228, 0, 0, 0.5);
+    border-radius: 40%;
+
+    }
+
+.img {   
+        opacity: 1;
+        size: cover;
+}
+
+h2 {
+    border: 3px dotted;
+    border-width: 20px, 5px;  
+}
+
+p.one { /*kopierte disse inn her som eksempler på hvordan du former en border*/
+    border-style: solid;
+    border-width: 5px 20px; /* 5px top and bottom, 20px on the sides */
+  }
+  
+  p.two {
+    border-style: solid;
+    border-width: 20px 5px; /* 20px top and bottom, 5px on the sides */
+  }
+  
+  p.three {
+    border-style: solid;
+    border-width: 25px 10px 4px 35px; /* 25px top, 10px right, 4px bottom and 35px left */
+  }
+/*Marginer: kan bruke verdiene AUTO, lengde(cm,mm,rem), %, INHERIT */
+  p {
+    margin-top: auto;
+    margin-bottom: 1mm;
+    margin-right: auto;
+    margin-left: auto;
+  }
+
+
+  .box {
+    border: 15px teal;
+    outline-style: ridge;
+    outline-color:tomato;
+    outline-width: thick;
+    width: 300px;
+    padding: 50px;
+    margin: 20px;
+    float: right;                 /*float bestemmer relativ plassering i forhold til andre elementer, forestill deg tekstbrytning i word*/
+    Background-color: orange;
+    }
+
+  .box1 {
+    border: 15px teal;
+    outline-style: ridge;
+    outline-color:tomato;
+    outline-width: thick;
+    width: 300px;
+    padding: 50px;
+    margin: 20px;
+    float: left;                 /*floater til venstre istedenfor høyre*/
+    Background-color: orange;
+  }
+
+  /*Nedenfor er css spesifikt ment til et gridlayout jeg har i tankene*/
+  .grid {
+    display: grid;            /*Syntax: [ -outside> || -inside> ] | -listitem> | -internal> | -box> | -legacy>*/
+    grid-template-columns: repeat(auto-fit, minmax(300px,1fr));    /*specifies, as a space-separated track list, the line names and track sizing functions of the grid autofit betyr "pass så mange kollonner som mulig. minmax size er selvforklarende*/
+
+  }
+  .img-wrapper {
+    position: relative;
+    overflow: hidden;
+  }
+  .img-wrapper > img {
+    display: block; /*Block gjør at vi ikke trenger å tenke på ekstra størrelser på bilder og gjør bildene lettere å jobbe med*/
+    width: 100%;
+    aspect-ratio: 1 / 1;
+    object-fit: cover; /*justerer så alle bildene dekker elementet uavhengig opprinnelig størrelse (resolution)*/
+    object-position:center; /*fokuserer bildet i senter av elementet uavhengig opprinnelig orientasjon*/
+
+  }
+  .img-wrapper > .content {
+    position: absolute;
+    inset: 0; /*dette setter topleft og right til 0*/
+    font-size: 2rem;
+    padding: 1rem;
+    background: rgba(255, 255, 255, .4);
+    display: flex; /*genererer flexbox. ble tilpsa av atle at jeg bør sette meg inn i dette da det er en bedre funksjon enn float*/
+    justify-content: center;  /*justerer flexelementer*/
+    align-items: center;      /*det samme, men dette justerer teksten inni flexboksen til å (her) være i midten*/
+  }
+
+  /*nå skal jeg velge både bildet og bilbewrapperen samtidig til å starte med animasjonen:*/
+  .img-wrapper > img,
+  .img-wrapper > .content{
+    transition: 200ms ease-in-out;    /*fader inn tekst+bildet ila 200ms*/
+
+  }
+/*nedenfor er en animasjon for content fade (egendefinert class), som bestemmer hva som skjer når jeg hovrer over et av elementene markert med div class="content fade"*/
+  .img-wrapper > .content.fade {
+    opacity: 0;
+  }
+  .img-wrapper:hover > .content.fade {
+    opacity: 1;
+  }
+
+  /*Blur, til når end user hovrer over bildet*/
+  .img-wrapper:hover > img.blur {
+    filter:blur(5px);
+    transition: all 0.9s;
+  }
+  /*Grayscale*/
+  .img-wrapper:hover > img.gray {
+    filter: grayscale(1) /*1 = 100%*/
+  }
+  .img-wrapper:hover > img.zoom {
+    transform:scale(1.1) /*her bruker jeg transform:scale for å lage en zooming effect "onhover". 1.1 betyr 10% ekstra scalering opp, altså 1.1=110%, så ville jeg "zoomet ut" ville jeg skallert ned istedenfor, med 10% hadde det blitt 0.9*/
+  }
+
+  /*min løsninf for "zoom ut" nå vil jeg ikke zoome ut ved å skalere ned, men heller øke bildets zoom før hover slik at jeg slipper å endre på størrelsen når den zoomer 10% ut*/
+  .img-wrapper > img.-zoom {
+    transform:scale(1.1) 
+  }
+  .img-wrapper:hover > img.-zoom {
+    transform:scale(01) 
+  }
+
+  /*Slides, viktig at dette gjøres i kronologisk rekkefølge som effektene ovenfor.*/
+  .img-wrapper > .content.slide-left {
+    transform: translatex(-100%);
+  }
+  .img-wrapper:hover > .content.slide-left{
+    transform: translatex(0%);
+    transition: ease-in 0.5s;
+  }
+  .img-wrapper > .content.slide-right {
+    transform: translatex(100%)
+  }
+  .img-wrapper:hover > .content.slide-right{
+    transform: translatex(0%)
+  }
+  .img-wrapper > .content.slide-up {
+    transform: translatey(100%)
+  }
+  .img-wrapper:hover > .content.slide-up{
+    transform: translatey(0%)
+  }
+  .img-wrapper > .content.slide-down {
+    transform: translatey(-100%)
+  }
+  .img-wrapper:hover > .content.slide-down{
+    transform: translatey(0%)
+  }
+
+  @media only screen and (max-width: 600px) /*WTF*/
+  {
+    grid-template-columns: 200px 1fr; 
+    grid-template-rows: 20px 10fr 20px; 
+    grid-template-areas:"header header"    
+                        "menu mainContent"
+                        "footer footer";
+                      }
